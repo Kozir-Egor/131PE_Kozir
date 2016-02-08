@@ -22,7 +22,14 @@ namespace _131PE_Kozir
             {
                 y = (x / 100) * 5;
             }
-            Console.WriteLine("Ваш дневной заработок составляет {0}", y);
+            if (y > 300)
+            {
+                Console.WriteLine("Дневной заработок составляет {0} рублей", y);
+            }
+            else
+            {
+                Console.WriteLine("Размер минимальной дневной оплаты – 300");
+            }
             Console.ReadKey();
         }
     }
