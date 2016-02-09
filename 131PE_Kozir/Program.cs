@@ -17,6 +17,10 @@ namespace _131PE_Kozir_3
             {
                 if (i > 4)
                 {
+                    if (array[i] <= 100000)
+                    {
+                        p[i] = array[i] / 100 * 15;
+                    }
                     if (array[i] > 10000)
                     {
                         p[i] = ((array[i] - 10000) / 100 * 10 + 500) * 2;
@@ -25,6 +29,7 @@ namespace _131PE_Kozir_3
                     {
                         p[i] = (array[i] / 100) * 5;
                     }
+                    
                 }
                 else
                 {
