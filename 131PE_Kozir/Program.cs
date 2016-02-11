@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace _131PE_Kozir_3
 {
@@ -54,38 +55,23 @@ namespace _131PE_Kozir_3
         static void Main(string[] args)
         {
 
-            int n;
             int i = 0;
             int[] t;
-            Console.WriteLine("Введите кол-во дней от 5 до 7, нажмите Enter");
-            n = Convert.ToInt32(Console.ReadLine());
-            if (n >= 5 && n <= 7)
+            Console.WriteLine("ВВедите название файла");
+            string name = Console.ReadLine();
+            string[] mas = File.ReadAllText(name).Split(new char[]{' '});
+            int[] array = new int[mas.Length];
+            for(i = 0; i < mas.Length; i++)
             {
-                Console.WriteLine("Введите заработок за каждый день, после вводе напишите end");
+               array[i] = Int32.Parse(mas[i]);
             }
-            else
-            {
-
-                Console.WriteLine("ошибка!");
-                Console.ReadKey();
-                return;
-            }
-
-
-            int[] array = new int[n];
-            string a;
-            while ((a = Console.ReadLine()) != "end") //Получаем строку и проверяем ее содержание
-                array[i++] = Convert.ToInt32(a); //в стркое нет "конца" - значит конвертим и пишем в массив
-
-            for (int k = 0; k < i; k++) //вывод заполненных ячеек массива
-            { }
             t = Array(array);
-            //for (i = 0; i < t.Length; i++ )                //для вывода полученного массива!
-            //{
-            //    Console.Write(t[i]);
-            //    Console.Write(' ');
-            //}
-            Console.WriteLine("Заработок за {0} дней равен: {1} ", n, t.Sum());
+          //for (i = 0; i < t.Length; i++ )                //для вывода полученного массива!
+          // {
+          //     Console.Write(t[i]);
+          //      Console.Write(' ');
+          // }
+            Console.WriteLine("Заработок равен: {1} ", t.Sum());
 
             Console.ReadKey();
         }
