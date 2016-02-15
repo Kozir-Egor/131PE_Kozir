@@ -55,62 +55,63 @@ namespace _131PE_Kozir_3
         static void Main(string[] args)
         {
 
-            int i = 0;
             int[] r;
-            Sot[] array = new Sot[3];
+            List<Week> weeks = new List<Week>();
             Console.WriteLine("Введите название файла");
             string name = Console.ReadLine();
-            Console.WriteLine("Введите фамилию сотрудника");
-            string FIO = Console.ReadLine();
+            //Console.WriteLine("Введите фамилию сотрудника");
+
             using (StreamReader reader = new StreamReader(name, Encoding.Default))
             {
-                for (i = 0; i < 3; i++)
+                while(! reader.EndOfStream)
                 {
-                    array[i] = new Sot(reader.ReadLine().Split('|'));
-                    string[] mas = File.ReadAllText(name).Split(new char[] { ' ' });
+                    string[] parseLine = reader.ReadLine().Split(';');
+
+                    weeks.Add(new Week(
+                        DateTime.Parse(parseLine[0]), 
+                        parseLine.Skip(1).Select(a => Int32.Parse(a)).ToArray())
+                    );
                 }
             }
-            if (!Sot.CheckFIO(FIO, array))
+
+            for (int i = 0; i < weeks.Count; i++)
             {
-                Console.WriteLine("Сотрудник не найден");
+                weeks[i].Show();
             }
-            else
-                foreach (Sot s in array)
-                    if (s.FIO == FIO)
-                        s.Show();
+
+            //if (!Sot.CheckFIO(FIO, array))
+            //{
+            //    Console.WriteLine("Сотрудник не найден");
+            //}
+            //else
+            //    foreach (Sot s in array)
+            //        if (s.FIO == FIO)
+            //            s.Show();
             Console.ReadKey();
         }
-        struct Sot
-        {
-            public string FIO;
-            public string rur;
 
-            public Sot(string[] args)
+        public class Week
+        {
+            public DateTime Date { get; set; }
+            public int[] Results { get; set; }
+
+            public Week(DateTime dt, int[] results)
             {
-                FIO = args[0];
-                rur = args[1];
+                Date = dt;
+                Results = results;
             }
-            static public bool CheckFIO(string FIO, Sot[] array)
-            {
-                bool temp = false;
-                foreach (Sot s in array)
-                    if (s.FIO == FIO)
-                        temp = true;
-                return temp;
-            }
+            //static public bool CheckFIO(string FIO, Sot[] array)
+            //{
+            //    bool temp = false;
+            //    foreach (Sot s in array)
+            //        if (s.FIO == FIO)
+            //            temp = true;
+            //    return temp;
+            //}
             public void Show()
             {
-                int i = 0;
-                string[] mas = rur.Split(new char[] { ' ' });
-                int[] array = new int[mas.Length];
-                for (i = 0; i < mas.Length; i++)
-                {
-                    array[i] = Int32.Parse(mas[i]);
-                }
-                int[] t;
-                t = Array(array);
-                int sum = t.Sum();
-                Console.WriteLine("Сумма заработка сотрудника {0}: {1} ", FIO, sum);
+                int sum = Array(Results).Sum();
+                Console.WriteLine("Сумма заработка сотрудника {0}: {1} ", Date, sum);
             }
         }
     }
